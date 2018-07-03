@@ -24,31 +24,31 @@ public class ValidatorTest {
 	@Test
 	public void checkIfANameOrSurnameIsValid() {
 		String name = "Pedro";
-		assertTrue(validator.isValidNameOrSurname(name));
+		assertTrue(validator.isValidStringWithMinAndMax(name,4,50));
 	}
 	
 	@Test
 	public void checkIfANameOrSurnameIsInvalidWhenIsEmpty() {
 		String name = "";
-		assertFalse(validator.isValidNameOrSurname(name));
+		assertFalse(validator.isValidStringWithMinAndMax(name,4,50));
 	}
 	
 	@Test
 	public void checkIfANameOrSurnameIsInvalidWhenIsNull() {
 		String name = null;
-		assertFalse(validator.isValidNameOrSurname(name));
+		assertFalse(validator.isValidStringWithMinAndMax(name,4,50));
 	}
 	
 	@Test
 	public void checkIfANameOrSurnameIsInvalidWhenIsLessThanFour() {
 		String name = "foo";
-		assertFalse(validator.isValidNameOrSurname(name));
+		assertFalse(validator.isValidStringWithMinAndMax(name,4,50));
 	}
 	
 	@Test
 	public void checkIfANameOrSurnameIsInvalidWhenIsMoreThanFifty() {
 		String name = "ggggggggggggggggggggggggggggggggggggggggggggggggggggggg"; //55 chars
-		assertFalse(validator.isValidNameOrSurname(name));
+		assertFalse(validator.isValidStringWithMinAndMax(name,4,50));
 	}
 	
 	@Test
@@ -63,15 +63,54 @@ public class ValidatorTest {
 		assertFalse(validator.isValidEmailAddress(mail));
 	}
 	
-//	@Test
-//	public void checkIfATelephoneIsValid() {
-//		String telephone = "011-4-224-9785";
-//		assertTrue(validator.isValidTelephone(telephone));
-//	}
+	@Test
+	public void checkIfATelephoneIsValid() {
+		String telephone = "01142249785";
+		assertTrue(validator.isValidTelephone(telephone));
+	}
 	
 	@Test
 	public void checkIfATelephoneIsInvalid() {
 		String telephone = "485";
 		assertFalse(validator.isValidTelephone(telephone));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void checkIfAUserIsInvalidAllAttributesInvalid() throws IllegalArgumentException {
+		User u = new User("", "","","","" );
+		validator.validateUserAttributes(u);
+		
+	}
+	
+	@Test
+	public void checkIfAUserIsValid() {
+		User u = new User("20317359692", "ooooooo","Looooopez","gaboto 32","pepe@gmail.com" );
+		assertTrue(validator.validateUserAttributes(u));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void checkIfAVehicleIsInvalidAllAttributesInvalid() throws IllegalArgumentException {
+		Vehicle  v = new Vehicle("", null, -5, "", "");
+		validator.validateVehicleAttributes(v);
+	}
+	
+	@Test
+	public void checkIfAVehicleIsValid() {
+		Vehicle  v = new Vehicle("focus", VehicleType.Car, 5, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "http://xxxxxx.com");
+		assertTrue(validator.validateVehicleAttributes(v));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void checkIfAPublicationIsInvalidAllAttributesInvalid() throws IllegalArgumentException {
+		Publication  p = new Publication(null, "","","",-5d,null);
+		validator.validatePublicationAttributes(p);
+	}
+	
+	@Test
+	public void checkIfAPublicationIsValid() {
+		Vehicle  v = new Vehicle();
+		User u = new User();
+		Publication  p = new Publication(v,"gaboto 50", "gaboto 5", "42248888", 50d, u);
+		assertTrue(validator.validatePublicationAttributes(p));
 	}
 }

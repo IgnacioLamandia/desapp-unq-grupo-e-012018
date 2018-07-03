@@ -213,8 +213,8 @@ public class User {
 		Validator validator = new Validator();
 		
 		return (validator.isValidCuil(cuil) &&
-				validator.isValidNameOrSurname(name) &&
-				validator.isValidNameOrSurname(surname) &&
+				validator.isValidStringWithMinAndMax(name,4,50) &&
+				validator.isValidStringWithMinAndMax(surname,4,50) &&
 				validator.isValidEmailAddress(email));
 	}
 	

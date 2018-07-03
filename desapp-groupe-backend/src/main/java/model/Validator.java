@@ -5,6 +5,8 @@ public class Validator {
 	public Boolean isValidCuil(String cuil) {
 
 		Boolean valid = false;
+	if(!this.isNullOrEmptyString(cuil))
+	{
 		int factor = 5;
 		int[] c = new int[11];
 		int resultado = 0;
@@ -19,14 +21,22 @@ public class Validator {
 		if (control == c[10]) {
 			valid = true;
 		}
+	}
 		return valid;
 	}
 	
-	public Boolean isValidNameOrSurname(String nameOrSurname) {
-		if (nameOrSurname != null && (nameOrSurname.length() >= 4 && nameOrSurname.length() <= 50))
+	public Boolean isValidStringWithMinAndMax(String string, int min , int max) {
+		if (string != null && (string.length() >= min && string.length() <= max))
 			return true;
 		else
 			return false;
+	}
+	
+	public Boolean isNullOrEmptyString(String string) {
+	    if  (string==null || string.isEmpty()) {
+	           return true;
+	    } 
+	    return false;
 	}
 
 	public Boolean isValidEmailAddress(String email) {
@@ -37,9 +47,74 @@ public class Validator {
 	}
 
 	public Boolean isValidTelephone(String telephone) {
-		String tPattern = "/^((?:\\(?\\d{3}\\)?[- .]?\\d{4}|\\(?\\d{4}\\)?[- .]?\\d{3}|\\(?\\d{5}\\)?[- .]?\\d{2})[- .]?\\d{4})$/";
-		java.util.regex.Pattern p = java.util.regex.Pattern.compile(tPattern);
-		java.util.regex.Matcher m = p.matcher(telephone);
-		return m.matches();
+//		String tPattern = "/^((?:\\(?\\d{3}\\)?[- .]?\\d{4}|\\(?\\d{4}\\)?[- .]?\\d{3}|\\(?\\d{5}\\)?[- .]?\\d{2})[- .]?\\d{4})$/";
+//		java.util.regex.Pattern p = java.util.regex.Pattern.compile(tPattern);
+//		java.util.regex.Matcher m = p.matcher(telephone);
+//		return m.matches();
+		
+		if (telephone != null && (telephone.length() >= 6 && telephone.length() <= 13))
+		{
+			try {
+			Integer.valueOf(telephone);
+			}
+			catch(NumberFormatException nfe)
+			{
+				return false;
+			}
+			return true;
+		}
+		else
+			return false;
 	}
+	
+	public Boolean validateUserAttributes(User user) throws IllegalArgumentException { 
+		
+		if (this.isValidCuil(user.getCuil()) &&
+				this.isValidStringWithMinAndMax(user.getName(),4,50) &&
+				this.isValidStringWithMinAndMax(user.getSurname(),4,50) &&
+				!this.isNullOrEmptyString(user.getAddress()) &&
+				this.isValidEmailAddress(user.getEmail()))
+		{
+			
+			return true;
+		} else {
+			System.out.println(this.isValidCuil(user.getCuil()) + "***" +
+					this.isValidStringWithMinAndMax(user.getName(),4,50) +  "***" +
+					this.isValidStringWithMinAndMax(user.getSurname(),4,50) + "***" +
+					!this.isNullOrEmptyString(user.getAddress()) + "***" +
+					this.isValidEmailAddress(user.getEmail()));
+			throw new IllegalArgumentException("Invalid argument");
+		}
+	}
+	
+	public Boolean validatePublicationAttributes(Publication publication) { 
+		
+		if ( (!this.isNullOrEmptyString(publication.getRetireAddress())) &&
+			 (!this.isNullOrEmptyString(publication.getReturnAddress())) &&
+			 (this.isValidTelephone(publication.getTelephone())) &&
+			 (publication.getCostPerHour() > 0 && publication.getCostPerHour() != null) &&
+			 (publication.getVehicle() != null) &&
+			 (publication.getOwner() != null)) {
+			return true;
+		}
+		else {
+			throw new IllegalArgumentException("Invalid argument");
+		}
+	}
+	
+	public Boolean validateVehicleAttributes(Vehicle vehicle) { 
+		
+		if ( (!this.isNullOrEmptyString(vehicle.getModel())) &&
+			 (vehicle.getType() != null) &&
+			 (vehicle.getNumberOfPassengers() > 0 && vehicle.getNumberOfPassengers() != null) &&
+			 (this.isValidStringWithMinAndMax(vehicle.getDescription(),30,200)) &&
+			 (!this.isNullOrEmptyString(vehicle.getPhoto()))) 
+		{
+			return true;
+		}
+		else {
+			throw new IllegalArgumentException("Invalid argument");
+		}
+	}
+		
 }
