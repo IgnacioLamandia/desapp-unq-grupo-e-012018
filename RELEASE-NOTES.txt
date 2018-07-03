@@ -42,7 +42,7 @@ KNOWN ISSUES:
 * Deploy Heroku
 
 ----------------------------------------------------------------------------------------------------------------------
-Release 3.0 - Tag Entrega3
+Release 3.0 - Tag Entrega_3
 ----------------------------------------------------------------------------------------------------------------------
 NEW FEATURES:
 * Build en "verde"
@@ -69,6 +69,28 @@ KNOWN ISSUES:
 * Validator - metodo isValidTelephone()
 * Delete de vehiculos
 * Delete de publicaciones
+* Deploy Heroku
+
+----------------------------------------------------------------------------------------------------------------------
+Release 4.0 - Tag Entrega_4
+----------------------------------------------------------------------------------------------------------------------
+NEW FEATURES:
+* Build en "verde"
+* Validaciones en Cliente y Servidor de formularios y transacciones del sitio
+* Retiro del vehículo
+* Devolución del vehículo
+* Notificaciones por email
+* Listado de alquileres historicos
+* Delete de publicaciones
+* Validator - metodo isValidTelephone()
+
+NOTES:
+* Algunos nombres de test estan en español
+* Sorting de publicaciones segun criterios
+* Envio de estado de la cuenta
+
+KNOWN ISSUES:
+* Delete de vehiculos
 * Deploy Heroku
 
 
