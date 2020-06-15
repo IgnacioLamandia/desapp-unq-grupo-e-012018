@@ -497,7 +497,7 @@
 	</dependencies>
 
 	<properties>
-		<org.springframework.version>4.1.3.RELEASE</org.springframework.version>
+		<org.springframework.version>5.2.7.RELEASE</org.springframework.version>
 		<cxf.version>2.7.18</cxf.version>
 		<jackson.version>1.8.2</jackson.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
